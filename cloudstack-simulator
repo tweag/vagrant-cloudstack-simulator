@@ -1,0 +1,40 @@
+#!/bin/bash
+#
+# cloudstack-simulator CloudStack Simulator
+#
+# chkconfig: 345 50 50
+# description: CloudStack Simulator Service
+
+M2_HOME=/usr/local/apache-maven-3.0.5
+PATH=${M2_HOME}/bin:${PATH}
+CLOUDSTACK_HOME=/root/cloudstack/
+CLOUDSTACK_START_COMMAND="mvn -Dsimulator -pl client jetty:run"
+CLOUDSTACK_LOGFILE=/var/log/cloudstack-simulator.log
+CLOUDSTACK_PIDFILE=/tmp/cloudstack-simulator.pid
+
+case "$1" in
+  start)
+    echo -n "Starting CloudStack Simulator: "
+    cd $CLOUDSTACK_HOME
+    nohup $CLOUDSTACK_START_COMMAND > $CLOUDSTACK_LOGFILE 2>&1 &
+    echo $! > $CLOUDSTACK_PIDFILE
+    echo "OK"
+    ;;
+  stop)
+    # Oracle listener and instance shutdown
+    echo -n "Stopping CloudStack Simulator: "
+    PID=$(cat $CLOUDSTACK_PIDFILE)
+    kill $PID
+    sleep 1
+    rm -f $CLOUDSTACK_PIDFILE
+    echo "OK"
+    ;;
+  reload|restart)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 start|stop|restart|reload"
+    exit 1
+esac
+exit 0

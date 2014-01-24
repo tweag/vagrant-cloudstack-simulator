@@ -1,12 +1,15 @@
 #!/bin/bash -ex
 
 # Dependencies
-yum update -y
+yum install git wget -y
+[[ -f /etc/yum.repos.d/epel.repo ]] || rpm -i http://mirror.metrocast.net/fedora/epel/6/i386/epel-release-6-8.noarch.rpm
+[[ -f /etc/yum.repos.d/erlang-solutions.repo ]] || rpm -i http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm || true
+# yum update -y
 yum install \
   ant \
   ant-devel \
+  erlang \
   gcc \
-  git \
   java-1.6.0-openjdk \
   java-1.6.0-openjdk-devel \
   mkisofs \
@@ -18,8 +21,17 @@ yum install \
   python-devel \
   python-pip \
   tomcat6 \
-  wget \
   -y
+
+# RabbitMQ
+[[ -f /etc/init.d/rabbitmq-server ]] || \
+  rpm -i http://www.rabbitmq.com/releases/rabbitmq-server/v3.2.3/rabbitmq-server-3.2.3-1.noarch.rpm
+chkconfig --level 345 rabbitmq-server on
+/etc/init.d/rabbitmq-server start
+
+# Start Dependency Services
+chkconfig --level 345 mysqld on
+/etc/init.d/mysqld start
 
 # Maven
 cd
@@ -37,22 +49,20 @@ cd
   git clone https://github.com/apache/cloudstack.git
 cd cloudstack
 git checkout 4.2.0
+wget https://gist.github.com/justincampbell/8599856/raw/AddingRabbitMQtoCloudStackComponentContext.patch
+git apply AddingRabbitMQtoCloudStackComponentContext.patch
 mvn -Pdeveloper -Dsimulator -DskipTests -Dmaven.install.skip=true install
+cp /vagrant/cloudstack-simulator /etc/init.d/
+chkconfig --level 345 cloudstack-simulator on
 
 # CloudStack Create DB
-/etc/init.d/mysqld start
-# TODO: ensure runlevel for mysql
 mvn -Pdeveloper -pl developer -Ddeploydb
 mvn -Pdeveloper -pl developer -Ddeploydb-simulator
 
-# CloudStack Start
-# TODO: wrap this in init.d or upstart
-mvn -Dsimulator -pl client jetty:run &
-
 # CloudStack Configuration
+/etc/init.d/cloudstack-simulator start
 yum groupinstall "Development Tools" -y
 pip install argparse
-sleep 30 # TODO: wait for cloudstack api
+sleep 60 # Wait for CloudStack to start
 mvn -Pdeveloper,marvin.sync -Dendpoint=localhost -pl :cloud-marvin
-# TODO: expect next command to fail
-mvn -Pdeveloper,marvin.setup -Dmarvin.config=setup/dev/advanced.cfg -pl :cloud-marvin integration-test
+mvn -Pdeveloper,marvin.setup -Dmarvin.config=setup/dev/advanced.cfg -pl :cloud-marvin integration-test || true

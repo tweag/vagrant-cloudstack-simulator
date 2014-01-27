@@ -65,3 +65,11 @@ pip install argparse
 sleep 60 # Wait for CloudStack to start
 mvn -Pdeveloper,marvin.sync -Dendpoint=localhost -pl :cloud-marvin
 mvn -Pdeveloper,marvin.setup -Dmarvin.config=setup/dev/advanced.cfg -pl :cloud-marvin integration-test || true
+
+# Cleanup
+rm -rf ~/*.tar.gz
+rm -rf ~/cloudstack/.git
+rm -rf /tmp
+yum clean all
+find /var/log -type f | while read f; do echo -ne '' > $f; done;
+dd if=/dev/zero of=wipefile bs=1024x1024 || rm -f wipefile

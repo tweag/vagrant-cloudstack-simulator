@@ -61,7 +61,6 @@ mvn -Pdeveloper -pl developer -Ddeploydb-simulator
 
 # CloudStack Configuration
 /etc/init.d/cloudstack-simulator start
-yum groupinstall "Development Tools" -y
 pip install argparse
 sleep 60 # Wait for CloudStack to start
 mvn -Pdeveloper,marvin.sync -Dendpoint=localhost -pl :cloud-marvin

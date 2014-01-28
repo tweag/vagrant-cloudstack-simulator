@@ -69,7 +69,7 @@ mvn -Pdeveloper,marvin.setup -Dmarvin.config=setup/dev/advanced.cfg -pl :cloud-m
 # Cleanup
 rm -rf ~/*.tar.gz
 rm -rf ~/cloudstack/.git
-rm -rf /tmp
+rm -rf /tmp/*
 yum clean all
 find /var/log -type f | while read f; do echo -ne '' > $f; done;
 dd if=/dev/zero of=wipefile bs=1024x1024 || rm -f wipefile

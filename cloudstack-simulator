@@ -21,7 +21,6 @@ case "$1" in
     echo "OK"
     ;;
   stop)
-    # Oracle listener and instance shutdown
     echo -n "Stopping CloudStack Simulator: "
     PID=$(cat $CLOUDSTACK_PIDFILE)
     kill $PID

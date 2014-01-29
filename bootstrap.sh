@@ -3,7 +3,7 @@
 # Dependencies
 yum install git wget -y
 [[ -f /etc/yum.repos.d/epel.repo ]] || rpm -i http://mirror.metrocast.net/fedora/epel/6/i386/epel-release-6-8.noarch.rpm
-[[ -f /etc/yum.repos.d/erlang-solutions.repo ]] || rpm -i http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm || true
+[[ -f /etc/yum.repos.d/erlang_solutions.repo ]] || rpm -i http://packages.erlang-solutions.com/erlang-solutions-1.0-1.noarch.rpm || true
 # yum update -y
 yum install \
   ant \

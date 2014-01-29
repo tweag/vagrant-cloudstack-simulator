@@ -9,23 +9,20 @@ M2_HOME=/usr/local/apache-maven-3.0.5
 PATH=${M2_HOME}/bin:${PATH}
 CLOUDSTACK_HOME=/root/cloudstack/
 CLOUDSTACK_START_COMMAND="mvn -Dsimulator -pl client jetty:run"
+CLOUDSTACK_STOP_COMMAND="mvn -Dsimulator -pl client jetty:stop"
 CLOUDSTACK_LOGFILE=/var/log/cloudstack-simulator.log
-CLOUDSTACK_PIDFILE=/tmp/cloudstack-simulator.pid
 
 case "$1" in
   start)
     echo -n "Starting CloudStack Simulator: "
     cd $CLOUDSTACK_HOME
     nohup $CLOUDSTACK_START_COMMAND > $CLOUDSTACK_LOGFILE 2>&1 &
-    echo $! > $CLOUDSTACK_PIDFILE
     echo "OK"
     ;;
   stop)
     echo -n "Stopping CloudStack Simulator: "
-    PID=$(cat $CLOUDSTACK_PIDFILE)
-    kill $PID
-    sleep 1
-    rm -f $CLOUDSTACK_PIDFILE
+    $CLOUDSTACK_STOP_COMMAND
+    pkill java
     echo "OK"
     ;;
   reload|restart)

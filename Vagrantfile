@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "private_network", ip: "10.0.123.101"
 
   config.vm.provider "virtualbox" do |vbox|
-    vbox.memory = 2048
+    vbox.memory = 4096
   end
 
   config.vm.provision :shell, path: "bootstrap.sh"

@@ -46,9 +46,9 @@ export PATH=${M2_HOME}/bin:${PATH}
 # CloudStack Build
 cd
 [[ -d cloudstack ]] || \
-  git clone https://github.com/apache/cloudstack.git
+  git clone https://github.com/dgrizzanti/cloudstack.git
 cd cloudstack
-git checkout 4.2.0
+git checkout 4.2-tag-patches
 wget https://gist.github.com/justincampbell/8599856/raw/AddingRabbitMQtoCloudStackComponentContext.patch
 git apply AddingRabbitMQtoCloudStackComponentContext.patch
 mvn -Pdeveloper -Dsimulator -DskipTests -Dmaven.install.skip=true install

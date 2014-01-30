@@ -65,6 +65,8 @@ mvn -Pdeveloper,marvin.sync -Dendpoint=localhost -pl :cloud-marvin
 mvn -Pdeveloper,marvin.setup -Dmarvin.config=setup/dev/advanced.cfg -pl :cloud-marvin integration-test || true
 /etc/init.d/cloudstack-simulator stop
 mysql -uroot cloud -e "update service_offering set ram_size = 32;"
+mysql -uroot cloud -e "update vm_template set enable_password = 1 where name like '%CentOS%';"
+mysql -uroot cloud -e "insert into hypervisor_capabilities values (100,'100','Simulator','default',50,1,6,NULL,0,0);"
 mysql -uroot cloud -e "update user set api_key = 'F0Hrpezpz4D3RBrM6CBWadbhzwQMLESawX-yMzc5BCdmjMon3NtDhrwmJSB1IBl7qOrVIT4H39PTEJoDnN-4vA' where id = 2;"
 mysql -uroot cloud -e "update user set secret_key = 'uWpZUVnqQB4MLrS_pjHCRaGQjX62BTk_HU8uiPhEShsY7qGsrKKFBLlkTYpKsg1MzBJ4qWL0yJ7W7beemp-_Ng' where id = 2;"
 /etc/init.d/cloudstack-simulator start

@@ -21,7 +21,6 @@ case "$1" in
     echo -n "Stopping CloudStack Simulator: "
     cd $CLOUDSTACK_HOME
     mvn -Dsimulator -pl client jetty:stop
-    pkill java
     echo "OK"
     ;;
   reload|restart)

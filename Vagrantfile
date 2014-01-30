@@ -12,4 +12,5 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.synced_folder ".", "/tmp/cloudstack-simulator"
 end

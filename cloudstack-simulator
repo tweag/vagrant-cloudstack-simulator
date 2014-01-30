@@ -9,7 +9,6 @@ M2_HOME=/usr/local/apache-maven-3.0.5
 PATH=${M2_HOME}/bin:${PATH}
 CLOUDSTACK_HOME=/root/cloudstack/
 CLOUDSTACK_START_COMMAND="mvn -Dsimulator -pl client jetty:run"
-CLOUDSTACK_STOP_COMMAND="mvn -Dsimulator -pl client jetty:stop"
 CLOUDSTACK_LOGFILE=/var/log/cloudstack-simulator.log
 
 case "$1" in
@@ -21,7 +20,8 @@ case "$1" in
     ;;
   stop)
     echo -n "Stopping CloudStack Simulator: "
-    $CLOUDSTACK_STOP_COMMAND
+    cd $CLOUDSTACK_HOME
+    mvn -Dsimulator -pl client jetty:stop
     pkill java
     echo "OK"
     ;;

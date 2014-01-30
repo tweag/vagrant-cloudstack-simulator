@@ -74,7 +74,6 @@ mysql -uroot cloud -e "update user set secret_key = 'uWpZUVnqQB4MLrS_pjHCRaGQjX6
 # Cleanup
 rm -rf ~/*.tar.gz
 rm -rf ~/cloudstack/.git
-rm -rf /tmp/*
 yum clean all
 find /var/log -type f | while read f; do echo -ne '' > $f; done;
 dd if=/dev/zero of=wipefile bs=1024x1024 || rm -f wipefile

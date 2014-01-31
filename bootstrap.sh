@@ -75,3 +75,9 @@ rm -rf ~/cloudstack/.git
 yum clean all
 find /var/log -type f | while read f; do echo -ne '' > $f; done;
 dd if=/dev/zero of=wipefile bs=1024x1024 || rm -f wipefile
+
+# Reset Networking
+sync
+sed -i /HWADDR/d /etc/sysconfig/network-scripts/ifcfg-eth0
+rm -f /etc/sysconfig/networking-scripts/ifcfg-eth1
+rm -f /etc/udev/rules.d/70-persistent-net.rules

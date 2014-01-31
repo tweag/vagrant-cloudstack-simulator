@@ -1,13 +1,13 @@
 NAME=cloudstack-simulator
 FILE=$(NAME).box
 
-all: provision install
+all: clean provision install
 
 clean:
 	rm -f $(FILE)
 	vagrant destroy --force
 
-provision: clean
+provision:
 	vagrant up --provision
 
 package: $(FILE)

@@ -8,7 +8,7 @@
 M2_HOME=/usr/local/apache-maven-3.0.5
 PATH=${M2_HOME}/bin:${PATH}
 CLOUDSTACK_HOME=/root/cloudstack/
-CLOUDSTACK_LOGFILE=/var/log/cloudstack-simulator.log
+CLOUDSTACK_LOGFILE=/vagrant/cloudstack-simulator.log
 
 case "$1" in
   start)

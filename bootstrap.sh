@@ -20,6 +20,7 @@ yum install \
   mysql \
   MySQL-python \
   mysql-server \
+  nc \
   openssh-clients \
   python \
   python-devel \
@@ -58,7 +59,7 @@ mvn -Pdeveloper -pl developer -Ddeploydb
 mvn -Pdeveloper -pl developer -Ddeploydb-simulator
 /etc/init.d/cloudstack-simulator start
 pip install argparse
-sleep 90 # TODO: Wait for CloudStack to start
+while ! nc -vz localhost 8096; do sleep 10; done # Wait for CloudStack to start
 mvn -Pdeveloper,marvin.sync -Dendpoint=localhost -pl :cloud-marvin
 mvn -Pdeveloper,marvin.setup -Dmarvin.config=setup/dev/advanced.cfg -pl :cloud-marvin integration-test || true
 /etc/init.d/cloudstack-simulator stop

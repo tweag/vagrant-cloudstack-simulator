@@ -45,7 +45,9 @@ export M2_HOME=/usr/local/apache-maven-3.0.5
 export PATH=${M2_HOME}/bin:${PATH}
 
 # CloudStack Build
-git clone -b 4.2-tag-patches --depth 1 https://github.com/dgrizzanti/cloudstack.git $cloudstack_dir
+#git clone -b 4.2-tag-patches --depth 1 https://github.com/dgrizzanti/cloudstack.git $cloudstack_dir
+curl -L https://github.com/dgrizzanti/cloudstack/archive/4.2-tag-patches.tar.gz | tar -xz
+mv cloudstack-4.2-tag-patches $cloudstack_dir
 cd $cloudstack_dir
 wget https://gist.github.com/justincampbell/8599856/raw/AddingRabbitMQtoCloudStackComponentContext.patch
 git apply AddingRabbitMQtoCloudStackComponentContext.patch

@@ -17,4 +17,15 @@ Vagrant.configure("2") do |config|
 
   config.vm.provision :shell, path: "bootstrap.sh"
   config.vm.synced_folder ".", "/tmp/cloudstack-simulator"
+
+  config.vm.provider :digital_ocean do |provider, override|
+    override.ssh.private_key_path = '~/.ssh/id_rsa'
+    override.vm.box = 'digital_ocean'
+    override.vm.box_url = "https://github.com/smdahlen/vagrant-digitalocean/raw/master/box/digital_ocean.box"
+
+    provider.image = 'CentOS 6.5 x64'
+    provider.size = '4GB'
+    provider.client_id = '1f7b761b646bcdd1c9bc45de69710d2b'
+    provider.api_key = 'Put API key here'
+  end
 end

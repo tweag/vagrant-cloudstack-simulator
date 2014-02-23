@@ -14,7 +14,7 @@ case "$1" in
   start)
     echo -n "Starting CloudStack Simulator: "
     cd $CLOUDSTACK_HOME
-    nohup mvn -Dsimulator -pl client jetty:run > $CLOUDSTACK_LOGFILE 2>&1 &
+    nohup mvn -Dnet.sf.ehcache.disabled=true -Dsimulator -pl client jetty:run > $CLOUDSTACK_LOGFILE 2>&1 &
     echo "OK"
     ;;
   stop)

@@ -1,6 +1,6 @@
 raise unless Vagrant::VERSION =~ /^1\.4/
 
-timezone = ENV['TZ'] || `systemsetup -gettimezone|cut -d':' -f2`.strip!
+timezone = ENV['TZ'] || `sudo systemsetup -gettimezone|cut -d':' -f2`.strip!
 
 Vagrant.configure("2") do |config|
   config.vm.box = "centos-6.5"

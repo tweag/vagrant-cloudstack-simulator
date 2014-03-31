@@ -1,4 +1,4 @@
-raise unless Vagrant::VERSION =~ /^1\.4/
+raise "Incorrect Vagrant version" unless Vagrant::VERSION =~ /^1\.5//
 
 timezone = ENV['TZ'] || `sudo systemsetup -gettimezone|cut -d':' -f2`.strip!
 
